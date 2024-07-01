@@ -6,8 +6,8 @@ const ctx = canvas.getContext("2d")
 const CELL_SIDE_LENGTH = 70
 
 const colors = {
-  black : "#E7F0DC",
-  red : "#597445",
+  black : "#005050",
+  red : "#002525",
   white : "#FF0000",
 }
 
@@ -95,15 +95,9 @@ window.addEventListener("DOMContentLoaded", () => {
     const clickY = mouseEvent.offsetY
     const screenWidth = window.innerWidth
 
-    const col = Math.floor(clickX / CELL_SIDE_LENGTH)
-    const row = Math.floor(clickY / CELL_SIDE_LENGTH)
-
-    const cellCountW = Math.floor(screenWidth / CELL_SIDE_LENGTH)
-
-    const pixelNumber = Math.floor(row * cellCountW * (1 + 1 / cellCountW) + col)
-
+    const pixelNumber = getPixelNumber(clickX, clickY, screenWidth)
     const cell = pixelBuffer[pixelNumber]
-    // Add the add point functionality
+
     cell.addPoint(clickX, clickY)
     cell.turnRed()
     drawPoint(clickX, clickY)
@@ -112,12 +106,24 @@ window.addEventListener("DOMContentLoaded", () => {
   })
 })
 
+// Returns the cell index under a certain point
+// takes x & y coordinates and the screen width
+function getPixelNumber(x, y, w) {
+    const col = Math.floor(x / CELL_SIDE_LENGTH)
+    const row = Math.floor(y / CELL_SIDE_LENGTH)
+
+    const cellCountW = Math.floor(w / CELL_SIDE_LENGTH)
+
+    const pixelNumber = Math.floor(row * cellCountW * (1 + 1 / cellCountW) + col)
+    return pixelNumber
+}
+
 window.addEventListener("contextmenu", (e) => {e.preventDefault()})
 
 function drawPoint(x, y) {
   ctx.beginPath()
   ctx.arc(x, y, 10, 0, 2 * Math.PI)
-  ctx.fillStyle = "#000000"
+  ctx.fillStyle = "#FFFF00"
   ctx.fill()
 }
 
@@ -125,5 +131,6 @@ function drawLine(x, y, tx, ty) {
   ctx.beginPath()
   ctx.moveTo(x,y)
   ctx.lineTo(tx,ty)
+  ctx.strokeStyle = "#FFFF00"
   ctx.stroke()
 }
