@@ -13,13 +13,32 @@ const colors = {
 
 const pixelBuffer = {}
 
-class Cell {
-  xc;
-  yc;
-  w;
-  bc;
-  points;
-  pointCount;
+class Board {
+  points 
+  constructor() {
+    this.points = []
+  }
+  addPoint(x,y) {
+    this.points.push({x,y})
+  }
+  connectDots() {
+    for (let j = 0; j < this.points.length; j++) {
+      const prevPoint = this.points[j]
+      const nextPoint = this.points[j+1]
+      drawLine(prevPoint.x, prevPoint.y, nextPoint.x, nextPoint.y)
+    }
+  }
+}
+
+const board = new Board()
+
+class Cell{
+  xc
+  yc
+  w
+  bc
+  points
+  pointCount
   constructor(x, y, width, bc) {
     this.xc = x
     this.yc = y
@@ -88,6 +107,8 @@ window.addEventListener("DOMContentLoaded", () => {
     cell.addPoint(clickX, clickY)
     cell.turnRed()
     drawPoint(clickX, clickY)
+    board.addPoint(clickX, clickY)
+    board.connectDots()
   })
 })
 
@@ -98,4 +119,11 @@ function drawPoint(x, y) {
   ctx.arc(x, y, 10, 0, 2 * Math.PI)
   ctx.fillStyle = "#000000"
   ctx.fill()
+}
+
+function drawLine(x, y, tx, ty) {
+  ctx.beginPath()
+  ctx.moveTo(x,y)
+  ctx.lineTo(tx,ty)
+  ctx.stroke()
 }
