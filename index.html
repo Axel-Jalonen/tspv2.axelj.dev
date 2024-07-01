@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript!</title>
+</head>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		font-weight: normal;
+	}
+	:root {
+		font-family: system-ui;
+	}
+	#canvas {
+	}
+	#information-cont {
+		position: absolute;
+		left: 50%;
+		top: 2.50%;
+		transform: translateX(-50%);
+		border: 2px solid black;
+		padding: 1rem;
+	}
+</style>
+<body>
+	<div id="information-cont">
+		<p>Total Circles: <span id="total-circle-count"></span></p>
+	</div>
+	<canvas id="canvas">
+	</canvas>
+</body>
+<script src="index.js"></script>
+</html>
