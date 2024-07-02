@@ -15,22 +15,34 @@ const pixelBuffer = {}
 
 class Board {
   points 
+  cells
   constructor() {
     this.points = []
+    this.cells = []
   }
   addPoint(x,y) {
     this.points.push({x,y})
+  }
+  addCell(cell) {
+    this.cells.push(cell)
+  }
+  getRandomCell() {
+    console.log("Get random cell was called")
+    const occupiedCellLength = this.cells.length
+    const chosenCell = this.cells[Math.floor(Math.random() * occupiedCellLength)]
+    return chosenCell
   }
   connectDots() {
     for (let j = 0; j < this.points.length; j++) {
       const prevPoint = this.points[j]
       const nextPoint = this.points[j+1]
+      if (!nextPoint) {
+        break
+      }
       drawLine(prevPoint.x, prevPoint.y, nextPoint.x, nextPoint.y)
     }
   }
 }
-
-const board = new Board()
 
 class Cell{
   xc
@@ -66,10 +78,16 @@ class Cell{
   get pointCount() {
     return this.pointCount
   }
+  makeArbColor(c) {
+    ctx.fillStyle = c
+    ctx.fillRect(this.xc, this.yc, this.w, this.w)
+  }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
 
+  const board = new Board()
+  
   ctx.canvas.width = window.innerWidth
   ctx.canvas.height = window.innerHeight
 
@@ -100,9 +118,18 @@ window.addEventListener("DOMContentLoaded", () => {
 
     cell.addPoint(clickX, clickY)
     cell.turnRed()
+
+    board.addCell(cell)
+
     drawPoint(clickX, clickY)
+
     board.addPoint(clickX, clickY)
+
     board.connectDots()
+
+    const randCell = board.getRandomCell()
+    randCell.makeArbColor("#FFFFFF")
+
   })
 })
 
