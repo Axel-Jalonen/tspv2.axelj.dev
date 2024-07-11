@@ -133,8 +133,6 @@ window.addEventListener("DOMContentLoaded", () => {
   })
 })
 
-// Returns the cell index under a certain point
-// takes x & y coordinates and the screen width
 function getPixelNumber(x, y, w) {
     const col = Math.floor(x / CELL_SIDE_LENGTH)
     const row = Math.floor(y / CELL_SIDE_LENGTH)
